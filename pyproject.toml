@@ -1,0 +1,12 @@
+[project]
+name = "3dprintruneescape"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.4.2",
+    "opencv-python>=4.13.0.92",
+    "pygame>=2.6.1",
+    "pyserial>=3.5",
+]
