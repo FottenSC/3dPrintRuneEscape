@@ -81,6 +81,21 @@ class PrinterController:
         """Set movement to relative coordinates (G91)."""
         return self.send_gcode("G91")
 
+    def get_position(self):
+        """Request and parse accurate absolute coordinates (M114)."""
+        responses = self.send_gcode("M114", wait_for_ok=True)
+        pos = {"X": 0.0, "Y": 0.0, "Z": 0.0}
+        for line in responses:
+            if "X:" in line and "Y:" in line and "Z:" in line:
+                try:
+                    for p in line.split():
+                        if p.startswith("X:"): pos["X"] = float(p.split(":")[1])
+                        if p.startswith("Y:"): pos["Y"] = float(p.split(":")[1])
+                        if p.startswith("Z:"): pos["Z"] = float(p.split(":")[1])
+                except Exception:
+                    pass
+        return pos
+
     def move(self, x=None, y=None, z=None, e=None, f=None):
         """
         Move to/by coordinates. 
